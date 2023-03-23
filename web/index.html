@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FGVC-aircraft identification system</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./dog/dist/style.css">
+    <script src="https://kit.fontawesome.com/9786b0f3a5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main-dog">
+        <div class="dog">
+            <div class="dog__paws">
+                <div class="dog__bl-leg leg">
+                    <div class="dog__bl-paw paw"></div>
+                    <div class="dog__bl-top top"></div>
+                </div>
+                <div class="dog__fl-leg leg">
+                    <div class="dog__fl-paw paw"></div>
+                    <div class="dog__fl-top top"></div>
+                </div>
+                <div class="dog__fr-leg leg">
+                    <div class="dog__fr-paw paw"></div>
+                    <div class="dog__fr-top top"></div>
+                </div>
+            </div>
+            <div class="dog__body">
+                <div class="dog__tail"></div>
+            </div>
+            <div class="dog__head">
+                <div class="dog__snout">
+                    <div class="dog__nose"></div>
+                    <div class="dog__eyes">
+                        <div class="dog__eye-l"></div>
+                        <div class="dog__eye-r"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="dog__head-c">
+                <div class="dog__ear-l"></div>
+                <div class="dog__ear-r"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <span>FGVC-aircraft identification system</span>
+        <div class="wrapper">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+            <div class="content">
+                <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <div class="text">No aircraft image inserted</div>
+            </div>
+            <div id="cancel-btn"><i class="fas fa-times"></i></div>
+            <div class="file-name">File name here</div>
+        </div>
+        <div id="button">
+            <div id="btn">
+                <input id="default-btn" type="file" hidden>
+                <button onclick="defaultBtnActive()" id="custom-btn">Insert</button>
+            </div>
+            <div id="btn1">
+                <input id="default-btn1" type="file" hidden>
+                <button id="custom-btn1">Identify</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const wrapper = document.querySelector(".wrapper");
+        const fileName = document.querySelector(".file-name");
+        const cancelBtn = document.querySelector("#cancel-btn");
+        const defaultBtn = document.querySelector("#default-btn");
+        const customBtn = document.querySelector("#custom-btn");
+        const img = document.querySelector("img");
+        let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+
+        function defaultBtnActive() {
+            defaultBtn.click();
+        }
+        defaultBtn.addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    const result = reader.result;
+                    img.src = result;
+                    wrapper.classList.add("active");
+                }
+                cancelBtn.addEventListener("click", function() {
+                    img.src = "";
+                    wrapper.classList.remove("active");
+                });
+                reader.readAsDataURL(file);
+            }
+            if (this.value) {
+                let valueStore = this.value.match(regExp);
+                fileName.textContent = valueStore;
+            }
+        });
+    </script>
+</body>
+
+</html>
